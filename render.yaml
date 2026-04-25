@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: telegram-shop-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    autoDeploy: true
+    envVars:
+      # Pin Python so psycopg2-binary has a prebuilt wheel (no source build).
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_ID_1
+        sync: false
+      - key: ADMIN_ID_2
+        sync: false
+      - key: ADMIN_USERNAME_1
+        sync: false
+      - key: ADMIN_USERNAME_2
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: BACKUP_CHAT_ID
+        sync: false
+      - key: BACKUP_INTERVAL_MIN
+        value: "30"
+      # PostgreSQL connection string (e.g. Neon / Supabase / Render PG).
+      # When set, the bot stores all data here so it survives redeploys.
+      - key: DATABASE_URL
+        sync: false
